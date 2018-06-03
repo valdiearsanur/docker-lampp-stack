@@ -1,0 +1,12 @@
+{
+  "require" : {
+  },
+  "require-dev": {
+    "heroku/heroku-buildpack-php": "*"
+  },
+  "scripts": {
+    "post-install-cmd": [
+      "chmod 644 www/config.php"
+    ]
+  }
+}
