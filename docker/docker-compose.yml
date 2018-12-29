@@ -1,0 +1,35 @@
+version: "2"
+services:
+  www:
+    build: ./apache
+    container_name: lampp-apache
+    ports: 
+      - "8001:80"
+    volumes:
+      - ../www:/var/www/html/
+    links:
+      - db
+
+  db:
+    image: mysql/mysql-server:5.7
+    container_name: lampp-mysql
+    ports: 
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: my_database
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password
+    volumes:
+      - ./mysql/dump:/docker-entrypoint-initdb.d
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: lampp-pma
+    links: 
+      - db
+    ports:
+      - 8000:80
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
